@@ -1,1 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>SwingAI PWA</title>
+</head>
+<body>
+  <header>
+    <h1>SwingAI (PWA)</h1>
+    <p>Pick a 240-fps slo-mo clip → analyze → get stats.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <label class="btn">
+        Choose slo-mo video
+        <input id="videoFile" type="file" accept="video/*" hidden />
+      </label>
+      <div id="status"></div>
+      <progress id="progress" value="0" max="1"></progress>
+    </section>
+
+    <section class="card">
+      <h2>Results</h2>
+      <div class="grid">
+        <div><b>Exit Velo</b><div id="velo">—</div></div>
+        <div><b>Launch Angle</b><div id="angle">—</div></div>
+        <div><b>Contact Frame</b><div id="contact">—</div></div>
+      </div>
+      <small id="notes"></small>
+    </section>
+
+    <section class="card">
+      <h2>Preview (debug)</h2>
+      <canvas id="canvas" width="640" height="360"></canvas>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+  </script>
+</body>
+</html>
 
