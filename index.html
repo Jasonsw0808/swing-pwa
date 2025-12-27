@@ -2,46 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#111111" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="styles.css" />
-  <title>SwingAI PWA</title>
+  <title>Swing PWA</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; margin: 16px; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    video { width: 100%; max-width: 520px; background:#000; border-radius:12px; }
+    canvas { display:none; }
+    pre { background:#0b0b0b; color:#d7d7d7; padding:12px; border-radius:12px; overflow:auto; max-height: 240px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 12px; max-width: 560px; }
+    button { padding:10px 14px; border-radius: 10px; border: 0; background:#111; color:white; }
+    button:disabled { opacity:.4; }
+    input[type="file"] { max-width: 100%; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>SwingAI (PWA)</h1>
-    <p>Pick a 240-fps slo-mo clip → analyze → get stats.</p>
-  </header>
+  <h2>Swing PWA (Video Import + Analyzer)</h2>
 
-  <main>
-    <section class="card">
-      <label class="btn">
-        Choose slo-mo video
-        <input id="videoFile" type="file" accept="video/*" hidden />
-      </label>
-      <div id="status"></div>
-      <progress id="progress" value="0" max="1"></progress>
-    </section>
+  <div class="card">
+    <div class="row">
+      <input id="file" type="file" accept="video/*" />
+      <button id="analyze" disabled>Analyze</button>
+      <button id="clear" disabled>Clear</button>
+    </div>
 
-    <section class="card">
-      <h2>Results</h2>
-      <div class="grid">
-        <div><b>Exit Velo</b><div id="velo">—</div></div>
-        <div><b>Launch Angle</b><div id="angle">—</div></div>
-        <div><b>Contact Frame</b><div id="contact">—</div></div>
-      </div>
-      <small id="notes"></small>
-    </section>
+    <p id="meta"></p>
 
-    <section class="card">
-      <h2>Preview (debug)</h2>
-      <canvas id="canvas" width="640" height="360"></canvas>
-    </section>
-  </main>
+    <video id="video" playsinline controls></video>
+    <canvas id="canvas"></canvas>
 
-  <script type="module" src="app.js"></script>
+    <h3>Stats (placeholder)</h3>
+    <div id="stats">
+      <div>Exit Velo: <b id="ev">—</b></div>
+      <div>Launch Angle: <b id="la">—</b></div>
+      <div>Distance: <b id="dist">—</b></div>
+      <div>Impact Point: <b id="impact">—</b></div>
+      <div>Field Landing: <b id="landing">—</b></div>
+    </div>
+
+    <h3>Log</h3>
+    <pre id="log"></pre>
+  </div>
+
+  <script src="app.js"></script>
   <script>
-    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./service-worker.js");
+    }
   </script>
 </body>
 </html>
