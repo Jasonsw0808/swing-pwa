@@ -1,6 +1,58 @@
-swing-pwa/
-  index.html
-  app.js
-  manifest.json
-  sw.js
-  styles.css
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#111111" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Swing PWA</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; margin: 16px; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    video { width: 100%; max-width: 520px; background:#000; border-radius:12px; }
+    canvas { display:none; }
+    pre { background:#0b0b0b; color:#d7d7d7; padding:12px; border-radius:12px; overflow:auto; max-height: 240px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 12px; max-width: 560px; }
+    button { padding:10px 14px; border-radius: 10px; border: 0; background:#111; color:white; }
+    button:disabled { opacity:.4; }
+    input[type="file"] { max-width: 100%; }
+  </style>
+</head>
+<body>
+  <h2>Swing PWA (Video Import + Analyzer)</h2>
+
+  <div class="card">
+    <div class="row">
+      <input id="file" type="file" accept="video/*" />
+      <button id="analyze" disabled>Analyze</button>
+      <button id="clear" disabled>Clear</button>
+    </div>
+
+    <p id="meta"></p>
+
+    <video id="video" playsinline controls></video>
+    <canvas id="canvas"></canvas>
+
+    <h3>Stats (placeholder)</h3>
+    <div id="stats">
+      <div>Exit Velo: <b id="ev">—</b></div>
+      <div>Launch Angle: <b id="la">—</b></div>
+      <div>Distance: <b id="dist">—</b></div>
+      <div>Impact Point: <b id="impact">—</b></div>
+      <div>Field Landing: <b id="landing">—</b></div>
+    </div>
+
+    <h3>Log</h3>
+    <pre id="log"></pre>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./service-worker.js");
+    }
+  </script>
+</body>
+</html>
+
+
